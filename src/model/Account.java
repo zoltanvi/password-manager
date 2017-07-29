@@ -1,6 +1,6 @@
 package model;
 
-public class Accounts {
+public class Account {
     private String username;
     private String password;
 
@@ -18,5 +18,12 @@ public class Accounts {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Username: " + username +
+                ", Password: " + password +
+                "\n";
     }
 }

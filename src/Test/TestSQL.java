@@ -14,12 +14,7 @@ public class TestSQL {
     public static void main(String[] args) {
         PasswordManagerDAO dao = new PasswordManagerDAO();
 
-       if(dao.existUser("zooli")){
-           System.out.println("létezik");
-       } else {
-           System.out.println("nemlétezik :(");
-       }
-
+        System.out.println(dao.getAllUser());
 
         System.out.println(dao.getPassword("admin"));
     }

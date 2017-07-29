@@ -72,4 +72,16 @@ public class PasswordManagerRegistration {
 		panel_2.add(btnRegistration);
 
 	}
+
+    public JTextField getTxtUsername() {
+        return txtUsername;
+    }
+
+    public JPasswordField getTxtPass1() {
+        return txtPass1;
+    }
+
+    public JPasswordField getTxtPass2() {
+        return txtPass2;
+    }
 }

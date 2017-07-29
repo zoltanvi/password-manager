@@ -1,5 +1,6 @@
 package controller;
 
+import model.Account;
 import model.PasswordManagerDAO;
 import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
 import org.jasypt.util.text.BasicTextEncryptor;
@@ -20,6 +21,7 @@ public class PasswordManagerController implements ActionListener{
         dao = new PasswordManagerDAO();
     }
 
+    /** Logging in the user */
     public void loginUser(){
         String usrnm = gui.getLogin().getTxtUsername().getText();
         String pwd = gui.getLogin().getTxtPass1().getText();
@@ -36,78 +38,94 @@ public class PasswordManagerController implements ActionListener{
                     System.out.println("Successfully logged in!");
                     JOptionPane.showMessageDialog(gui.getPanel(),
                             "Successfully logged in as " + usrnm + "!",
-                            "Login",  JOptionPane.PLAIN_MESSAGE);
+                            "Login", JOptionPane.PLAIN_MESSAGE);
                     gui.switchToLoggedIn();
                 }
 
             } catch(EncryptionOperationNotPossibleException xx){
                 JOptionPane.showMessageDialog(gui.getPanel(),
                         "Wrong password!",
-                        "Password",
-                        JOptionPane.ERROR_MESSAGE);
+                        "Password", JOptionPane.ERROR_MESSAGE);
             }catch(NullPointerException x) {
                 JOptionPane.showMessageDialog(gui.getPanel(),
                         "This username not exist!",
-                        "Username",
-                        JOptionPane.ERROR_MESSAGE);
+                        "Username", JOptionPane.ERROR_MESSAGE);
             }
         }
    }
 
-    public void regUser(){
+    /** Register an Account */
+    public void regUser() {
+        String usrnm = gui.getRegistration().getTxtUsername().getText();
+        String pwd = gui.getRegistration().getTxtPass1().getText();
+        String pwda = gui.getRegistration().getTxtPass2().getText();
 
-        /*
-        if (GUI.server.isUser(txtUsername.getText()) == false) {
+        if (dao.existsUser(usrnm) == false &&
+                usrnm.length() != 0 &&
+                pwd.equals(pwda) &&
+                pwd.length() != 0){
 
-			if (txtPass1.getText().equals(txtPass2.getText())
-					&& txtPass1.getText().length() != 0) {
+            BasicTextEncryptor encryptor = new BasicTextEncryptor();
+            encryptor.setPassword(pwd);
 
-				GUI.SESSION_PASSWORD = txtPass1.getText();
-				BasicTextEncryptor encryptor = new BasicTextEncryptor();
-				encryptor.setPasswordCharArray(txtPass1.getPassword());
+            try {
+                Account acc = new Account();
+                acc.setUsername(usrnm);
+                acc.setPassword(encryptor.encrypt(pwd));
+                if (dao.addAccount(acc)){
+                    JOptionPane.showMessageDialog(gui.getPanel(),
+                            "Successfully registered as " + usrnm + "!",
+                            "Registration", JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(gui.getPanel(),
+                            "Failed to register this user!",
+                            "Registration", JOptionPane.ERROR_MESSAGE);
+                }
 
-				try {
-					if (GUI.server.newProfil(txtUsername.getText(),
-							encryptor.encrypt(txtPass1.getText())) != 0) {
-						JOptionPane.showMessageDialog(panel,
-								"Sikeres regisztracio!", "",
-								JOptionPane.PLAIN_MESSAGE);
-					} else {
-						JOptionPane.showMessageDialog(panel,
-								"Sikertelen regisztracio!", "Hiba!",
-								JOptionPane.PLAIN_MESSAGE);
-					}
-				} catch (Exception e2) {
-					System.out.println("Hiba a kodolassal!");
-				}
+            }catch (Exception x){
+                JOptionPane.showMessageDialog(gui.getPanel(),
+                        "Something went wrong!",
+                        "Registration", JOptionPane.ERROR_MESSAGE);
+                x.printStackTrace();
+            }
+        } else if(usrnm.length() == 0){
+            JOptionPane.showMessageDialog(gui.getPanel(),
+                    "The username cannot be empty!",
+                    "Registration", JOptionPane.ERROR_MESSAGE);
+        } else if(!pwd.equals(pwda)){
+            JOptionPane.showMessageDialog(gui.getPanel(),
+                    "Passwords do not match!",
+                    "Registration", JOptionPane.ERROR_MESSAGE);
+        } else if(pwd.length() == 0 || pwda.length() == 0){
+            JOptionPane.showMessageDialog(gui.getPanel(),
+                    "No password fields can be empty!",
+                    "Registration", JOptionPane.ERROR_MESSAGE);
+        } else if(dao.existsUser(usrnm)){
+            JOptionPane.showMessageDialog(gui.getPanel(),
+                    "This username is already taken!",
+                    "Registration", JOptionPane.ERROR_MESSAGE);
+        }
 
-			} else if (txtUsername.getText().length() == 0) {
-				JOptionPane.showMessageDialog(panel,
-						"A felhasznalonev nem lehet ures!", "Hiba!",
-						JOptionPane.PLAIN_MESSAGE);
-			} else if(txtPass1.getText().length() == 0 || txtPass2.getText().length() == 0){
-				JOptionPane.showMessageDialog(panel, "Egyik jelszo mezo sem lehet ures!",
-						"Hiba!", JOptionPane.PLAIN_MESSAGE);
-			} else if ((txtPass1.getText().equals(txtPass2.getText())) == false) {
-				JOptionPane.showMessageDialog(panel,
-						"A jelszavak nem egyeznek!", "Hiba!",
-						JOptionPane.PLAIN_MESSAGE);
-			}
-		} else {
-			JOptionPane.showMessageDialog(panel, "Ezzel a felhasznalonevvel mar regisztraltak!",
-					"Hiba!", JOptionPane.PLAIN_MESSAGE);
-		}
-
-		System.out.println("Felhasználók listája:\n");
-			GUI.server.printEveryOne();
-		System.out.println("##");
-
-         */
-
+        //checking all user
+        System.out.println(dao.getAllUser());
 
     }
 
+    /** Logging out the user */
+    public void logoutUser(){
+        gui.setSessionPassword(null);
+        gui.setSessionUsername(null);
+        gui.getLogin().getTxtPass1().setText(null);
+        gui.getLogin().getTxtUsername().setText(null);
+        gui.switchToLog();
+        JOptionPane.showMessageDialog(gui.getPanel(),
+                "Successfully logged out!",
+                "Logout", JOptionPane.PLAIN_MESSAGE);
+    }
 
+    public void closeConnection(){
+        dao.closeConnection();
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand =  e.getActionCommand();
@@ -122,7 +140,7 @@ public class PasswordManagerController implements ActionListener{
                 || actionCommand.equals(Labels.REG_PASS2FIELD)
                 || actionCommand.equals(Labels.REG_REGBUTTON)
                 || actionCommand.equals(Labels.REG_USERFIELD)){
-            // TODO REGISTRATION
+            regUser();
         }
 
     }

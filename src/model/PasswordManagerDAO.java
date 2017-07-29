@@ -191,6 +191,11 @@ public class PasswordManagerDAO {
         return passwords;
     }
 
+    /**
+     * Returns the user's password
+     * @param username is the account's username
+     * @return the password as a string
+     */
     public String getPassword(String username){
         String password = null;
         String query = "SELECT PASSWORD FROM ACCOUNTS WHERE USERNAME = ?";
@@ -205,35 +210,6 @@ public class PasswordManagerDAO {
         }
         return password;
     }
-
-
-
-
-
-//    public int newAccount(String username, String password){
-//        int success = 0;
-//        String query = "INSERT INTO ACCOUNTS(username, password) VALUES(?, ?);";
-//        try (PreparedStatement pst = this.conn.prepareStatement(query)) {
-//
-//            pst.setString(1, username);
-//            pst.setString(2, password);
-//            success = pst.executeUpdate();
-//
-//        } catch (SQLException e) {
-//            System.out.println("Failed to create this account!");
-//            e.printStackTrace();
-//        }
-//        return success;
-//    }
-
-
-
-
-
-
-
-
-
 
 
 

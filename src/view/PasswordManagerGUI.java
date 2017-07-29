@@ -87,6 +87,7 @@ public class PasswordManagerGUI {
 
 
 
+
     public void switchToInp(){
         System.out.println("Not implemented yet!");
     }
@@ -95,7 +96,8 @@ public class PasswordManagerGUI {
     }
 
 	public void exit(){
-    	frame.dispose();
+        controller.closeConnection();
+        frame.dispose();
 	}
 
     public JFrame getFrame() {

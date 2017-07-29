@@ -83,15 +83,22 @@ public class PasswordManagerMenuBar extends JMenuBar implements ActionListener{
 
         if (actionCommand.equals(Labels.MENUBAR_FIRST_REGISTRATION)) {
             gui.switchToReg();
-            System.out.println(Labels.MENUBAR_FIRST_REGISTRATION);
+            gui.getRegistration().getTxtPass1().setText(null);
+            gui.getRegistration().getTxtPass2().setText(null);
+            gui.getRegistration().getTxtUsername().setText(null);
         }
         if (actionCommand.equals(Labels.MENUBAR_FIRST_LOGIN)) {
             gui.switchToLog();
-            System.out.println(Labels.MENUBAR_FIRST_LOGIN);
+            gui.getLogin().getTxtUsername().setText(null);
+            gui.getLogin().getTxtPass1().setText(null);
         }
         if (actionCommand.equals(Labels.MENUBAR_FIRST_EXIT)) {
             gui.exit();
-            System.out.println(Labels.MENUBAR_FIRST_EXIT);
+        }
+        if(actionCommand.equals(Labels.MENUBAR_FIRST_LOGOUT)){
+            gui.getController().logoutUser();
+
+            //TODO: set null the table with the passwords
         }
 
 

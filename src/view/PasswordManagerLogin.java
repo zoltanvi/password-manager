@@ -15,12 +15,13 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class PasswordManagerLogin {
-    Actions actions = new Actions(this);
 	JPanel loginpanel;
 	private JTextField txtUsername;
 	private JPasswordField txtPass1;
+	private  PasswordManagerGUI gui;
 	
-	public PasswordManagerLogin() {
+	public PasswordManagerLogin(PasswordManagerGUI gui) {
+	    this.gui = gui;
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
@@ -70,15 +71,23 @@ public class PasswordManagerLogin {
 		});
 		txtPass1.setBounds(252, 146, 380, 22);
 		panel_2.add(txtPass1);
-		txtPass1.addActionListener(actions);
-		txtUsername.addActionListener(actions);
-		
+		txtPass1.addActionListener(gui.getController());
+		txtPass1.setActionCommand(Labels.LOGIN_PASSFIELD);
+		txtUsername.addActionListener(gui.getController());
+        txtUsername.setActionCommand(Labels.LOGIN_USERFIELD);
 		JButton btnLogin = new JButton(Labels.LOGIN_LOGINBUTTON);
-		btnLogin.addActionListener(actions);
+		btnLogin.addActionListener(gui.getController());
+
 	
 		btnLogin.setBounds(274, 222, 151, 25);
 		panel_2.add(btnLogin);
-		
-
 	}
+
+    public JTextField getTxtUsername() {
+        return txtUsername;
+    }
+
+    public JPasswordField getTxtPass1() {
+        return txtPass1;
+    }
 }

@@ -19,6 +19,8 @@ public class Labels {
     public static final String LOGIN_LOGINBUTTON = "Login";
     public static final String LOGIN_USERNAME = "Username";
     public static final String LOGIN_PASSWORD = "Password";
+    public static final String LOGIN_PASSFIELD = "pwd";
+    public static final String LOGIN_USERFIELD = "usrnm";
 
     //Registration panel labels
     public static final String REG_REGISTRATION = "Registration";
@@ -27,4 +29,7 @@ public class Labels {
     public static final String REG_PASSWORD = "Password";
     public static final String REG_RE_PASSWORD = "Password again";
 
+    public static final String REG_PASS1FIELD = "regpwd";
+    public static final String REG_PASS2FIELD = "regpwd2";
+    public static final String REG_USERFIELD = "regusrnm";
 }

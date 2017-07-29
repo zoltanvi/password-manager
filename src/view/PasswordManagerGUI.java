@@ -1,6 +1,7 @@
 package view;
 
-import java.awt.EventQueue;
+import controller.PasswordManagerController;
+
 import java.awt.Toolkit;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,28 +11,25 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 
 public class PasswordManagerGUI {
 
 	private JFrame frame;
 	private JPanel panel;
-	static JMenu firstMenu;
-	static JMenuItem mnNewAccount;
-	static JMenuItem mnLogin;
-	static JMenuItem mnLogout;
-	private JMenuItem mntmExit;
-	private JMenu secondMenu;
-	private JMenu thirdMenu;
-	private JMenu fourthMenu;
-	static JLabel lblLoggedIn;
-	static JLabel lblLoggedInAs;
+	private static JLabel lblNotLoggedIn;
+	private static JLabel lblLoggedInAs;
+	private static JLabel lblUser;
 	private static String SESSION_USERNAME;
 	private static String SESSION_PASSWORD;
-
+	private PasswordManagerLogin login;
+	private PasswordManagerRegistration registration;
+    private PasswordManagerMenuBar pMenuBar;
+    private PasswordManagerController controller;
 	public PasswordManagerGUI() {
-		PasswordManagerLogin lo = new PasswordManagerLogin();
+
+	    controller = new PasswordManagerController(this);
+		login = new PasswordManagerLogin(this);
+        registration = new PasswordManagerRegistration(this);
 
 		frame = new JFrame();
 		frame.setSize(new Dimension(700, 500));
@@ -41,41 +39,54 @@ public class PasswordManagerGUI {
 		panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout());
-		panel.add(lo.loginpanel);
-		//panel.add(na.regpanel);
-
-		PasswordManagerMenuBar pMenuBar = new PasswordManagerMenuBar(this);
+		panel.add(login.loginpanel);
+		pMenuBar = new PasswordManagerMenuBar(this);
         frame.setJMenuBar(pMenuBar);
 
-		lblLoggedIn = new JLabel(Labels.MENUBAR_NOT_LOGGED_IN);
-		lblLoggedIn.setForeground(new Color(210, 111, 255));
-		pMenuBar.add(lblLoggedIn);
 
-		lblLoggedInAs = new JLabel();
-		lblLoggedInAs.setFont(new Font("Tahoma", Font.ITALIC, 13));
-		lblLoggedInAs.setForeground(new Color(0, 197, 206));
+		lblNotLoggedIn = new JLabel(Labels.MENUBAR_NOT_LOGGED_IN);
+		lblNotLoggedIn.setForeground(new Color(210, 111, 255));
+        lblNotLoggedIn.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+		lblLoggedInAs = new JLabel(Labels.MENUBAR_LOGGED_IN_AS);
+		lblLoggedInAs.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblLoggedInAs.setForeground(new Color(0, 215, 68));
+
+        lblUser = new JLabel();
+		lblUser.setFont(new Font("Courier New", Font.BOLD, 15));
+		lblUser.setForeground(new Color(0, 98, 212));
 		
-		pMenuBar.add(lblLoggedInAs);
+		pMenuBar.add(lblNotLoggedIn);
 	
 	}
 
 	public void switchToReg(){
-        PasswordManagerRegistration reg = new PasswordManagerRegistration();
         panel.removeAll();
-        PasswordManagerMenuBar menu = new PasswordManagerMenuBar(this);
-        menu.regMenuPopulate();
-        panel.add(reg.regpanel);
+        pMenuBar.regMenuPopulate();
+        pMenuBar.add(lblNotLoggedIn);
+        panel.add(registration.regpanel);
         panel.repaint();
         panel.revalidate();
     }
 
     public void switchToLog(){
-        PasswordManagerLogin lo = new PasswordManagerLogin();
 	    panel.removeAll();
-        panel.add(lo.loginpanel);
+	    pMenuBar.loginMenuPopulate();
+        pMenuBar.add(lblNotLoggedIn);
+        panel.add(login.loginpanel);
         panel.repaint();
         panel.revalidate();
     }
+
+    public void switchToLoggedIn(){
+        pMenuBar.loggedinMenuPopulate();
+        pMenuBar.add(lblLoggedInAs);
+        pMenuBar.add(lblUser);
+    }
+
+
+
+
     public void switchToInp(){
         System.out.println("Not implemented yet!");
     }
@@ -89,5 +100,53 @@ public class PasswordManagerGUI {
 
     public JFrame getFrame() {
         return frame;
+    }
+
+    public PasswordManagerLogin getLogin() {
+        return login;
+    }
+
+    public PasswordManagerRegistration getRegistration() {
+        return registration;
+    }
+
+    public void setFrame(JFrame frame) {
+        this.frame = frame;
+    }
+
+    public static String getSessionUsername() {
+        return SESSION_USERNAME;
+    }
+
+    public static void setSessionUsername(String sessionUsername) {
+        SESSION_USERNAME = sessionUsername;
+    }
+
+    public static String getSessionPassword() {
+        return SESSION_PASSWORD;
+    }
+
+    public static void setSessionPassword(String sessionPassword) {
+        SESSION_PASSWORD = sessionPassword;
+    }
+
+    public PasswordManagerMenuBar getpMenuBar() {
+        return pMenuBar;
+    }
+
+    public static JLabel getLblLoggedInAs() {
+        return lblLoggedInAs;
+    }
+
+    public static JLabel getLblUser() {
+        return lblUser;
+    }
+
+    public JPanel getPanel() {
+        return panel;
+    }
+
+    public PasswordManagerController getController() {
+        return controller;
     }
 }

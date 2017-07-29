@@ -6,6 +6,7 @@ public class PasswordManagerDAO {
 
     private static Connection conn;
     private static String filepath = System.getenv("APPDATA");
+
     public PasswordManagerDAO(){
         conn = null;
 
@@ -34,6 +35,7 @@ public class PasswordManagerDAO {
                         + " P_USERNAME   TEXT,"
                         + " P_PASSWORD       TEXT,"
                         + "FOREIGN KEY(USERNAME) REFERENCES ACCOUNTS(USERNAME));";
+
                 stmt.executeUpdate(sql);
                 stmt.close();
                 System.out.println("Initialization is complete.");
@@ -64,10 +66,12 @@ public class PasswordManagerDAO {
             System.err.println( ex.getClass().getName() + ": " + ex.getMessage() ); //TODO
         }
     }
+
+
     public boolean existUser(String username){
         boolean exist = true;
 
-        String query = "SELECT USER FROM ACCOUNTS WHERE USERNAME = ?";
+        String query = "SELECT USERNAME FROM ACCOUNTS WHERE USERNAME = ?";
         try (PreparedStatement pst = this.conn.prepareStatement(query)){
             pst.setString(1, username);
             ResultSet rs = pst.executeQuery();
@@ -81,13 +85,14 @@ public class PasswordManagerDAO {
         return exist;
     }
 
-    public int newAccount(String name, String pass){
+
+    public int newAccount(String username, String password){
         int success = 0;
         String query = "INSERT INTO ACCOUNTS(username, password) VALUES(?, ?);";
         try (PreparedStatement pst = this.conn.prepareStatement(query)) {
 
-            pst.setString(1, name);
-            pst.setString(2, pass);
+            pst.setString(1, username);
+            pst.setString(2, password);
             success = pst.executeUpdate();
 
         } catch (SQLException e) {
@@ -97,7 +102,8 @@ public class PasswordManagerDAO {
         return success;
     }
 
-    public void newData(String username, String webpage, String p_username, String p_password){
+
+    public void newPassword(String username, String webpage, String p_username, String p_password){
         String query = "INSERT INTO PASSWORDS(username, webpage, p_username, p_password) VALUES(?, ?, ?, ?);";
         try (PreparedStatement pst = this.conn.prepareStatement(query)) {
 
@@ -118,12 +124,15 @@ public class PasswordManagerDAO {
         try {
             Statement st = this.conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM ACCOUNTS");
+
+            System.out.println("#####################\nUSERNAME\t\tPASSWORD");
+
             while (rs.next()) {
 
                 String username = rs.getString("username");
                 String password = rs.getString("password");
 
-                System.out.println("Username: " + username + "\tPassword: " + password + "\n");
+                System.out.println("\t" + username + "\t\t" + password);
             }
         } catch (Exception e) {
             System.out.println("Failed to print the users! ");
@@ -137,12 +146,12 @@ public class PasswordManagerDAO {
         try (PreparedStatement pst = this.conn.prepareStatement(query)) {
             pst.setString(1, who);
             ResultSet rs = pst.executeQuery();
-
+            System.out.println();
             while (rs.next()) {
-                System.out.println(rs.getString("USERNAME"));
-                System.out.println(rs.getString("WEBPAGE"));
-                System.out.println(rs.getString("P_USERNAME"));
-                System.out.println(rs.getString("P_PASSWORD"));
+                System.out.print(rs.getString("USERNAME") + "\t");
+                System.out.print(rs.getString("WEBPAGE") + "\t");
+                System.out.print(rs.getString("P_USERNAME") + "\t");
+                System.out.print(rs.getString("P_PASSWORD") + "\n");
             }
 
         } catch (SQLException e) {
@@ -155,12 +164,13 @@ public class PasswordManagerDAO {
     public String getPassword(String username){
         String password = null;
         String query = "SELECT PASSWORD FROM ACCOUNTS WHERE USERNAME = ?";
-        try (PreparedStatement pst = this.conn.prepareStatement(username)){
+        try (PreparedStatement pst = this.conn.prepareStatement(query)){
             pst.setString(1, username);
             ResultSet rs = pst.executeQuery();
             password = rs.getString("PASSWORD");
 
         } catch (SQLException e){
+            e.printStackTrace();
             System.out.println("No such user!");
         }
         return password;

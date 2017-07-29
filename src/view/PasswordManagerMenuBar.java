@@ -43,6 +43,8 @@ public class PasswordManagerMenuBar extends JMenuBar implements ActionListener{
         createMenu(Labels.MENUBAR_SECOND);
         createMenu(Labels.MENUBAR_THIRD);
         createMenu(Labels.MENUBAR_FOURTH);
+        this.repaint();
+        this.revalidate();
     }
 
     public void loginMenuPopulate(){
@@ -55,9 +57,10 @@ public class PasswordManagerMenuBar extends JMenuBar implements ActionListener{
         createMenu(Labels.MENUBAR_SECOND);
         createMenu(Labels.MENUBAR_THIRD);
         createMenu(Labels.MENUBAR_FOURTH);
+        this.repaint();
+        this.revalidate();
     }
     public void loggedinMenuPopulate(){
-
         this.removeAll();
         createMenu(Labels.MENUBAR_FIRST,
                 //Labels.MENUBAR_FIRST_REGISTRATION,
@@ -67,6 +70,8 @@ public class PasswordManagerMenuBar extends JMenuBar implements ActionListener{
         createMenu(Labels.MENUBAR_SECOND);
         createMenu(Labels.MENUBAR_THIRD);
         createMenu(Labels.MENUBAR_FOURTH);
+        this.repaint();
+        this.revalidate();
     }
 
 

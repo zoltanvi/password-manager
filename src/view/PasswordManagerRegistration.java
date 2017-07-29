@@ -17,10 +17,10 @@ public class PasswordManagerRegistration {
 	private JTextField txtUsername;
 	private JPasswordField txtPass1;
 	private JPasswordField txtPass2;
+    private  PasswordManagerGUI gui;
 
-	
-	public PasswordManagerRegistration() {
-		Actions actions = new Actions(this);
+	public PasswordManagerRegistration(PasswordManagerGUI gui) {
+        this.gui = gui;
 		regpanel = new JPanel();
 		regpanel.setLayout(new BorderLayout(0, 0));
 		JPanel panel_1 = new JPanel();
@@ -57,13 +57,16 @@ public class PasswordManagerRegistration {
 		
 		txtPass2 = new JPasswordField();
 		txtPass2.setBounds(252, 201, 380, 22);
-		txtPass1.addActionListener(actions);
-		txtPass2.addActionListener(actions);
-		txtUsername.addActionListener(actions);
+		txtPass1.addActionListener(gui.getController());
+		txtPass1.setActionCommand(Labels.REG_PASS1FIELD);
+		txtPass2.addActionListener(gui.getController());
+        txtPass2.setActionCommand(Labels.REG_PASS2FIELD);
+		txtUsername.addActionListener(gui.getController());
+        txtUsername.setActionCommand(Labels.REG_USERFIELD);
 		panel_2.add(txtPass2);
 		
 		JButton btnRegistration = new JButton(Labels.REG_REGBUTTON);
-		btnRegistration.addActionListener(actions);
+		btnRegistration.addActionListener(gui.getController());
 	
 		btnRegistration.setBounds(278, 288, 151, 25);
 		panel_2.add(btnRegistration);

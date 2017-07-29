@@ -1,3 +1,4 @@
+import controller.PasswordManagerController;
 import view.PasswordManagerGUI;
 
 import java.awt.*;

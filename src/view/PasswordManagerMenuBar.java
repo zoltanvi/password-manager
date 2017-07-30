@@ -67,11 +67,29 @@ public class PasswordManagerMenuBar extends JMenuBar implements ActionListener{
                 //Labels.MENUBAR_FIRST_LOGIN,
                 Labels.MENUBAR_FIRST_LOGOUT,
                 Labels.MENUBAR_FIRST_EXIT);
-        createMenu(Labels.MENUBAR_SECOND);
+        createMenu(Labels.MENUBAR_SECOND,
+                Labels.MENUBAR_SECOND_PASSWORDS);
         createMenu(Labels.MENUBAR_THIRD);
         createMenu(Labels.MENUBAR_FOURTH);
         this.repaint();
         this.revalidate();
+    }
+
+    public void passwordsMenuPopulate(){
+        this.removeAll();
+        createMenu(Labels.MENUBAR_FIRST,
+                //Labels.MENUBAR_FIRST_REGISTRATION,
+                //Labels.MENUBAR_FIRST_LOGIN,
+                Labels.MENUBAR_FIRST_LOGOUT,
+                Labels.MENUBAR_FIRST_EXIT);
+        createMenu(Labels.MENUBAR_SECOND,
+                Labels.MENUBAR_SECOND_PASSWORDS);
+        createMenu(Labels.MENUBAR_THIRD);
+        createMenu(Labels.MENUBAR_FOURTH);
+        this.repaint();
+        this.revalidate();
+
+
     }
 
 
@@ -100,6 +118,11 @@ public class PasswordManagerMenuBar extends JMenuBar implements ActionListener{
 
             //TODO: set null the table with the passwords
         }
+        if(actionCommand.equals(Labels.MENUBAR_SECOND_PASSWORDS)){
+            gui.getController().openPasswords();
+
+        }
+
 
 
     }

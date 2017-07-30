@@ -1,15 +1,19 @@
 package controller;
 
 import model.Account;
+import model.Password;
 import model.PasswordManagerDAO;
 import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
 import org.jasypt.util.text.BasicTextEncryptor;
 import view.Labels;
 import view.PasswordManagerGUI;
+import view.PasswordManagerPasswords;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PasswordManagerController implements ActionListener{
 
@@ -117,6 +121,7 @@ public class PasswordManagerController implements ActionListener{
         gui.setSessionUsername(null);
         gui.getLogin().getTxtPass1().setText(null);
         gui.getLogin().getTxtUsername().setText(null);
+        //gui.getPass().clearTable();
         gui.switchToLog();
         JOptionPane.showMessageDialog(gui.getPanel(),
                 "Successfully logged out!",
@@ -126,6 +131,36 @@ public class PasswordManagerController implements ActionListener{
     public void closeConnection(){
         dao.closeConnection();
     }
+
+    public void openPasswords(){
+        gui.switchToPass();
+    }
+
+    public List<Password> getPassw(String username){
+
+        List<Password> rePassList = new ArrayList<>();
+
+        BasicTextEncryptor encryptor = new BasicTextEncryptor();
+        encryptor.setPassword(gui.getSessionPassword());
+        for (Password temp : dao.getUserPasswords(username)) {
+          try {
+              Password rePass = new Password();
+              rePass.setUsername(username);
+              rePass.setWebpage(encryptor.decrypt(temp.getWebpage()));
+              rePass.setP_username(encryptor.decrypt(temp.getP_username()));
+              rePass.setP_password(encryptor.decrypt(temp.getP_password()));
+              rePassList.add(rePass);
+          } catch (Exception x){
+              x.printStackTrace();
+          }
+        }
+        return rePassList;
+    }
+
+    public void addNewPassword(Password password){
+        dao.addPassword(password);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand =  e.getActionCommand();

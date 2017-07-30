@@ -23,6 +23,7 @@ public class PasswordManagerGUI {
 	private static String SESSION_PASSWORD;
 	private PasswordManagerLogin login;
 	private PasswordManagerRegistration registration;
+    private PasswordManagerPasswords pass;
     private PasswordManagerMenuBar pMenuBar;
     private PasswordManagerController controller;
 	public PasswordManagerGUI() {
@@ -82,6 +83,17 @@ public class PasswordManagerGUI {
         pMenuBar.loggedinMenuPopulate();
         pMenuBar.add(lblLoggedInAs);
         pMenuBar.add(lblUser);
+    }
+
+    public void switchToPass(){
+        panel.removeAll();
+        pMenuBar.passwordsMenuPopulate();
+        pMenuBar.add(lblLoggedInAs);
+        pMenuBar.add(lblUser);
+        pass = new PasswordManagerPasswords(this);
+        panel.add(pass.panelPasswords);
+        panel.repaint();
+        panel.revalidate();
     }
 
 
@@ -150,5 +162,9 @@ public class PasswordManagerGUI {
 
     public PasswordManagerController getController() {
         return controller;
+    }
+
+    public PasswordManagerPasswords getPass() {
+        return pass;
     }
 }

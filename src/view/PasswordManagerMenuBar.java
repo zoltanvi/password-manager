@@ -115,11 +115,10 @@ public class PasswordManagerMenuBar extends JMenuBar implements ActionListener{
         }
         if(actionCommand.equals(Labels.MENUBAR_FIRST_LOGOUT)){
             gui.getController().logoutUser();
-
-            //TODO: set null the table with the passwords
         }
         if(actionCommand.equals(Labels.MENUBAR_SECOND_PASSWORDS)){
             gui.getController().openPasswords();
+
 
         }
 

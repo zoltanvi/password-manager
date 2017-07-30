@@ -41,4 +41,12 @@ public class Labels {
     public static final String PASS_ADD_BUTTON = "Add new password";
 
     public static final int NUMBER_OF_COLUMNS = 3;
+
+    //AddNewPass dialog labels
+    public static final String ADDNEW_PASSWORD = "Password";
+    public static final String ADDNEW_PASSWORD_AGAIN = "Password again";
+    public static final String ADDNEW_USERNAME = "Username";
+    public static final String ADDNEW_WEBPAGE = "Webpage";
+
+
 }

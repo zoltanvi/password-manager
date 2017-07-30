@@ -8,8 +8,6 @@ import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Font;
 
-import controller.Actions;
-
 
 public class PasswordManagerRegistration {
 

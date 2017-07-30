@@ -54,7 +54,17 @@ public class PasswordTableModel extends AbstractTableModel{
     }
 
     @Override
+    public String toString() {
+        String aa = null;
+        for (Password a: passwords) {
+            aa = aa + a.toString();
+        }
+        return aa;
+    }
+
+    @Override
     public Class getColumnClass(int c){
         return getValueAt(0, c).getClass();
     }
 }
+

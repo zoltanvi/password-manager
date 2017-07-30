@@ -26,6 +26,7 @@ public class PasswordManagerGUI {
     private PasswordManagerPasswords pass;
     private PasswordManagerMenuBar pMenuBar;
     private PasswordManagerController controller;
+    private AddNewPassword addPass;
 	public PasswordManagerGUI() {
 
 	    controller = new PasswordManagerController(this);
@@ -92,6 +93,14 @@ public class PasswordManagerGUI {
         pMenuBar.add(lblUser);
         pass = new PasswordManagerPasswords(this);
         panel.add(pass.panelPasswords);
+        panel.repaint();
+        panel.revalidate();
+    }
+
+    public void switchToAdd(){
+        panel.removeAll();
+        addPass = new AddNewPassword(this);
+        panel.add(addPass.contentPanel);
         panel.repaint();
         panel.revalidate();
     }

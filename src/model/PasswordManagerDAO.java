@@ -9,8 +9,7 @@ public class PasswordManagerDAO {
     private static Connection conn;
     private static String filepath = System.getenv("APPDATA");
 
-    List<Account> accounts = new ArrayList<>();
-    List<Password> passwords = new ArrayList<>();
+
 
     /** PasswordManagerDAO constructor */
     public PasswordManagerDAO(){
@@ -148,8 +147,10 @@ public class PasswordManagerDAO {
      * @return the accounts from the database
      */
     public List<Account> getAllUser() {
+        List<Account> accounts = new ArrayList<>();
         try (Statement st = this.conn.createStatement()){
             ResultSet rs = st.executeQuery("SELECT * FROM ACCOUNTS");
+
 
             while (rs.next()) {
                 Account account = new Account();
@@ -170,6 +171,7 @@ public class PasswordManagerDAO {
      * @return the Passwords as a list
      */
     public List<Password> getUserPasswords(String username){
+        List<Password> passwords = new ArrayList<>();
         String query = "SELECT * FROM PASSWORDS WHERE USERNAME = ?";
         try (PreparedStatement pst = this.conn.prepareStatement(query)) {
             pst.setString(1, username);

@@ -40,6 +40,7 @@ public class PasswordManagerController implements ActionListener{
             try{
                 if(encryptor.decrypt(dao.getPassword(usrnm)).equals(gui.getSessionPassword())){
                     System.out.println("Successfully logged in!");
+                    gui.switchToPass();
                     JOptionPane.showMessageDialog(gui.getPanel(),
                             "Successfully logged in as " + usrnm + "!",
                             "Login", JOptionPane.PLAIN_MESSAGE);
@@ -77,9 +78,11 @@ public class PasswordManagerController implements ActionListener{
                 acc.setUsername(usrnm);
                 acc.setPassword(encryptor.encrypt(pwd));
                 if (dao.addAccount(acc)){
+                    gui.switchToLog();
                     JOptionPane.showMessageDialog(gui.getPanel(),
                             "Successfully registered as " + usrnm + "!",
                             "Registration", JOptionPane.PLAIN_MESSAGE);
+
                 } else {
                     JOptionPane.showMessageDialog(gui.getPanel(),
                             "Failed to register this user!",
@@ -140,16 +143,24 @@ public class PasswordManagerController implements ActionListener{
 
         List<Password> rePassList = new ArrayList<>();
 
+        List<Password> daopass = dao.getUserPasswords(username);
+
+
         BasicTextEncryptor encryptor = new BasicTextEncryptor();
         encryptor.setPassword(gui.getSessionPassword());
-        for (Password temp : dao.getUserPasswords(username)) {
+
+
+        for (Password temp : daopass) {
           try {
               Password rePass = new Password();
               rePass.setUsername(username);
               rePass.setWebpage(encryptor.decrypt(temp.getWebpage()));
               rePass.setP_username(encryptor.decrypt(temp.getP_username()));
               rePass.setP_password(encryptor.decrypt(temp.getP_password()));
+
               rePassList.add(rePass);
+              System.out.println("rePASS added..." + rePass);
+
           } catch (Exception x){
               x.printStackTrace();
           }

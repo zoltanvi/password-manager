@@ -1,8 +1,7 @@
 package view;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -10,19 +9,11 @@ import model.Password;
 import model.PasswordTableModel;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.TableDataModel;
-
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.JLabel;
 
 
 public class PasswordManagerPasswords {
@@ -31,28 +22,27 @@ public class PasswordManagerPasswords {
     JPanel panelPasswords;
     public JButton btnNewButton;
     private PasswordTableModel model;
-    private static int counter = 0;
 
-
-    private List<TableDataModel> tableList = new ArrayList<TableDataModel>();
     private JTextField txtSearch;
     private JPanel panel_1;
-    private static List<Password> pass = null;
+    private List<Password> pass = new ArrayList<>();
 
     private TableRowSorter<TableModel> rowSorter;
 
 
     public PasswordManagerPasswords(PasswordManagerGUI gui) {
-        counter++;
+
         panelPasswords = new JPanel();
         panelPasswords.setLayout(new BorderLayout(0, 0));
+        panelPasswords.setBorder(new EmptyBorder(5, 5, 5 ,5));
 
         tablePasswords = new JTable();
         JScrollPane panelScroll = new JScrollPane();
         panelPasswords.add(panelScroll, BorderLayout.CENTER);
 
         panelScroll.setViewportView(tablePasswords);
-
+        panelScroll.setViewportBorder(null);
+        panelScroll.setBorder(new EmptyBorder(0, 0, 0, 0));
         panel_1 = new JPanel();
         panelPasswords.add(panel_1, BorderLayout.SOUTH);
         panel_1.setLayout(new BorderLayout(0, 0));
@@ -60,17 +50,20 @@ public class PasswordManagerPasswords {
         JPanel panel = new JPanel();
         panel_1.add(panel, BorderLayout.SOUTH);
         panel.setLayout(new BorderLayout(0, 0));
-
+        panel.setBorder(new EmptyBorder(5, 5, 5 ,5));
+        panel.setBackground(UIManager.getColor("CheckBox.light"));
         btnNewButton = new JButton(Labels.PASS_ADD_BUTTON);
 
         JPanel small = new JPanel();
         small.setLayout(new BorderLayout());
+        small.setBackground(UIManager.getColor("CheckBox.light"));
         //panel.add(btnNewButton, BorderLayout.EAST);
         panel.add(small, BorderLayout.EAST);
         small.add(btnNewButton, BorderLayout.CENTER);
 
         btnNewButton.addActionListener(e -> {
-            AddNewPass dialog = new AddNewPass(gui);
+            gui.switchToAdd();
+
         });
         small.add(new JLabel("          "), BorderLayout.WEST);
         small.add(new JLabel("          "), BorderLayout.EAST);
@@ -81,10 +74,9 @@ public class PasswordManagerPasswords {
 
 
         try {
-            if (counter > 1) {
-                pass.clear();
-            }
-            pass = gui.getController().getPassw(gui.getSessionUsername());
+
+            pass.addAll(gui.getController().getPassw(gui.getSessionUsername()));
+
             model = new PasswordTableModel(pass);
             tablePasswords.setModel(model);
 
@@ -123,9 +115,8 @@ public class PasswordManagerPasswords {
             });
 
 
-        } catch (Exception xx) {
-            xx.printStackTrace();
-
+        }catch (Exception y){
+           y.printStackTrace();
         }
 
 
@@ -134,8 +125,4 @@ public class PasswordManagerPasswords {
 
     }
 
-
-    public List<Password> getPass() {
-        return pass;
-    }
 }

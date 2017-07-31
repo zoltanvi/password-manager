@@ -12,8 +12,11 @@ public class Labels {
     public static final String MENUBAR_FIRST_LOGOUT = "Logout";
     public static final String MENUBAR_FIRST_EXIT = "Exit";
     public static final String MENUBAR_SECOND_PASSWORDS = "My Passwords";
-    public static final String MENUBAR_LOGGED_IN_AS = "    Logged in as ";
-    public static final String MENUBAR_NOT_LOGGED_IN = "    Not logged in!";
+    public static final String MENUBAR_LOGGED_IN_AS = "    You are logged in as ";
+    public static final String MENUBAR_NOT_LOGGED_IN = "    Unauthenticated. Please log in!";
+    public static final String MENUBAR_THIRD_IMPORT = "Import passwords";
+    public static final String MENUBAR_FOURTH_EXPORT = "Export passwords";
+
 
     //Login panel labels
     public static final String LOGIN_LOGIN = "Login";

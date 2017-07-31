@@ -8,9 +8,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class PasswordManagerGUI {
 
@@ -47,16 +45,16 @@ public class PasswordManagerGUI {
 
 
 		lblNotLoggedIn = new JLabel(Labels.MENUBAR_NOT_LOGGED_IN);
-		lblNotLoggedIn.setForeground(new Color(210, 111, 255));
-        lblNotLoggedIn.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNotLoggedIn.setForeground(new Color(255, 0, 11));
+        lblNotLoggedIn.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		lblLoggedInAs = new JLabel(Labels.MENUBAR_LOGGED_IN_AS);
-		lblLoggedInAs.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblLoggedInAs.setForeground(new Color(0, 215, 68));
+		lblLoggedInAs.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblLoggedInAs.setForeground(new Color(0, 63, 230));
 
         lblUser = new JLabel();
-		lblUser.setFont(new Font("Courier New", Font.BOLD, 15));
-		lblUser.setForeground(new Color(0, 98, 212));
+		lblUser.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblUser.setForeground(new Color(212, 89, 169));
 		
 		pMenuBar.add(lblNotLoggedIn);
 	
@@ -105,19 +103,18 @@ public class PasswordManagerGUI {
         panel.revalidate();
     }
 
-
-
-
-
     public void switchToInp(){
-        System.out.println("Not implemented yet!");
+        JOptionPane.showMessageDialog(this.getPanel(),
+                "Not implemented yet!",
+                "Error", JOptionPane.ERROR_MESSAGE);
     }
     public void switchToExp(){
-        System.out.println("Not implemented yet!");
+        JOptionPane.showMessageDialog(this.getPanel(),
+                "Not implemented yet!",
+                "Error", JOptionPane.ERROR_MESSAGE);
     }
 
 	public void exit(){
-        controller.closeConnection();
         frame.dispose();
 	}
 

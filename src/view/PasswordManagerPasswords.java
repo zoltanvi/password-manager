@@ -83,37 +83,38 @@ public class PasswordManagerPasswords {
             rowSorter = new TableRowSorter<>(tablePasswords.getModel());
             tablePasswords.setRowSorter(rowSorter);
 
-            txtSearch.getDocument().addDocumentListener(new DocumentListener() {
+            if(gui.getController().hasAnyPassword(gui.getSessionUsername())) {
+                txtSearch.getDocument().addDocumentListener(new DocumentListener() {
 
-                @Override
-                public void insertUpdate(DocumentEvent e) {
-                    String text = txtSearch.getText();
+                    @Override
+                    public void insertUpdate(DocumentEvent e) {
+                        String text = txtSearch.getText();
 
-                    if (text.trim().length() == 0) {
-                        rowSorter.setRowFilter(null);
-                    } else {
-                        rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                        if (text.trim().length() == 0) {
+                            rowSorter.setRowFilter(null);
+                        } else {
+                            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                        }
                     }
-                }
 
-                @Override
-                public void removeUpdate(DocumentEvent e) {
-                    String text = txtSearch.getText();
+                    @Override
+                    public void removeUpdate(DocumentEvent e) {
+                        String text = txtSearch.getText();
 
-                    if (text.trim().length() == 0) {
-                        rowSorter.setRowFilter(null);
-                    } else {
-                        rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                        if (text.trim().length() == 0) {
+                            rowSorter.setRowFilter(null);
+                        } else {
+                            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                        }
                     }
-                }
 
-                @Override
-                public void changedUpdate(DocumentEvent e) {
-                    throw new UnsupportedOperationException("Not supported yet.");
-                }
+                    @Override
+                    public void changedUpdate(DocumentEvent e) {
+                        throw new UnsupportedOperationException("Not supported yet.");
+                    }
 
-            });
-
+                });
+            }
 
         }catch (Exception y){
            y.printStackTrace();
